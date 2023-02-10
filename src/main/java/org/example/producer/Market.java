@@ -9,6 +9,7 @@ package org.example.producer;
 // пирожки у сейлера - тригер покупки - 5 у сейлера 0, тригер продажи - у сейлера 5, у консьюмера 0
 // пирожки у консьюмера - тригер - 5 пирожков у сейлера.тригер покупки, когда у него 0
 
+
 public class Market {
     public static void main(String[] args) {
         int count = 5;
