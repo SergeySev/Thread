@@ -14,7 +14,7 @@ package org.example.producer;
 
 public class Market {
     public static void main(String[] args) {
-        int count = 5;
+        int count = 1;
         Producer producer = new Producer(count);
         Seller seller = new Seller(count);
         Consumer consumer = new Consumer(5);
