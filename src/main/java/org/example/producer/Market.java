@@ -10,11 +10,9 @@ package org.example.producer;
 // пирожки у консьюмера - тригер - 5 пирожков у сейлера.тригер покупки, когда у него 0
 
 
-
-
 public class Market {
     public static void main(String[] args) {
-        int count = 1;
+        int count = 5;
         Producer producer = new Producer(count);
         Seller seller = new Seller(count);
         Consumer consumer = new Consumer(5);
