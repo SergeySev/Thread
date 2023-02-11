@@ -12,10 +12,10 @@ package org.example.producer;
 
 public class Market {
     public static void main(String[] args) {
-        int count = 5;
+        int count = 1;
         Producer producer = new Producer(count);
         Seller seller = new Seller(count);
-        Consumer consumer = new Consumer(5);
+        Consumer consumer = new Consumer(count);
         producer.setSeller(seller);
         seller.setConsumer(consumer);
         seller.setProducer(producer);
@@ -67,7 +67,7 @@ class Producer extends Thread {
 
     @Override
     public void run() {
-        for (int i = count; i != 0; i--) {
+        for (int i = count; i > 0; i--) {
             synchronized (lock) {
                 make();
                 seller.wakeUpSel();
@@ -128,7 +128,7 @@ class Seller extends Thread {
 
     @Override
     public void run() {
-        for (int i = count; i != 0; i--) {
+        for (int i = count; i > 0; i--) {
             synchronized (lock) {
                 try {
                     lock.wait();
@@ -187,7 +187,7 @@ class Consumer extends Thread {
 
     @Override
     public void run() {
-        for (int i = count; i != 0; i--) {
+        for (int i = count; i > 0; i--) {
             synchronized (lock) {
                 try {
                     lock.wait();
