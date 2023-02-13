@@ -10,20 +10,42 @@ package org.example.producer;
 // пирожки у консьюмера - тригер - 5 пирожков у сейлера.тригер покупки, когда у него 0
 
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Market {
-    public static void main(String[] args) {
-        int count = 1;
-        Producer producer = new Producer(count);
-        Seller seller = new Seller(count);
-        Consumer consumer = new Consumer(count);
+    static int count = 1;
+    static Producer producer = new Producer(count);
+    static Seller seller = new Seller(count);
+    static Consumer consumer = new Consumer(count);
+
+    public static void set() {
         producer.setSeller(seller);
         seller.setConsumer(consumer);
         seller.setProducer(producer);
         consumer.setSeller(seller);
+    }
 
+    public static void runWithThreadStart() {
+        set();
         producer.start();
         seller.start();
         consumer.start();
+    }
+    public static void runExecutor() {
+        set();
+        try(ExecutorService executor = Executors.newFixedThreadPool(3)) {
+            executor.submit(producer);
+            executor.submit(seller);
+            executor.submit(consumer);
+
+            executor.shutdown();
+        }
+    }
+    public static void main(String[] args) {
+        runExecutor();
+        runWithThreadStart();
+
     }
 }
 
@@ -132,6 +154,11 @@ class Seller extends Thread {
             synchronized (lock) {
                 try {
                     lock.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    sleep(300);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
