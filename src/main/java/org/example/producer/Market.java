@@ -32,9 +32,10 @@ public class Market {
         seller.start();
         consumer.start();
     }
+
     public static void runExecutor() {
         set();
-        try(ExecutorService executor = Executors.newFixedThreadPool(3)) {
+        try (ExecutorService executor = Executors.newFixedThreadPool(3)) {
             executor.submit(producer);
             executor.submit(seller);
             executor.submit(consumer);
@@ -42,10 +43,10 @@ public class Market {
             executor.shutdown();
         }
     }
+
     public static void main(String[] args) {
         runExecutor();
         runWithThreadStart();
-
     }
 }
 
